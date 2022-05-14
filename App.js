@@ -5,7 +5,7 @@ import Game from './components/Game';
 export default function App() {
 	return (
 		<View>
-			<Game />
+			<Game goal={500} />
 			<StatusBar style='auto' />
 		</View>
 	);
