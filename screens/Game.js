@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { StatusBar } from 'expo-status-bar';
 import {
 	StyleSheet,
 	Text,
@@ -10,7 +11,7 @@ import {
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-const Game = (props) => {
+const Game = ({ navigation, route }) => {
 	const [looter, setLooter] = useState(Math.random() >= 0.5);
 	const [score1, setScore1] = useState(0);
 	const [score2, setScore2] = useState(0);
@@ -18,12 +19,12 @@ const Game = (props) => {
 	useEffect(() => {
 		const timerId = setInterval(() => {
 			!isFinished() && (looter ? setScore1(score1 + 1) : setScore2(score2 + 1));
-		}, 0.01);
+		}, 1);
 		return () => clearInterval(timerId);
 	});
 
 	const isFinished = () => {
-		return score1 >= props.goal || score2 >= props.goal;
+		return score1 >= route.params.goal || score2 >= route.params.goal;
 	};
 
 	return (
@@ -41,7 +42,36 @@ const Game = (props) => {
 				<Text style={[styles.points, { transform: [{ rotate: '180deg' }] }]}>
 					{score1}
 				</Text>
-				<Text style={[styles.points]}>{score2}</Text>
+				<Text
+					style={[
+						styles.points,
+						{ paddingBottom: 0, transform: [{ rotate: '180deg' }] },
+					]}
+				>
+					Goal: {route.params.goal}
+				</Text>
+				<View style={{ width: windowWidth }}>
+					<View
+						style={{
+							width: (score1 / route.params.goal) * windowWidth,
+							backgroundColor: 'blue',
+							height: 90,
+						}}
+					/>
+					<View
+						style={{
+							width: (score2 / route.params.goal) * windowWidth,
+							backgroundColor: 'red',
+							height: 90,
+						}}
+					/>
+				</View>
+				<Text style={[styles.points, { paddingBottom: 0 }]}>
+					Goal: {route.params.goal}
+				</Text>
+
+				<Text style={styles.points}>{score2}</Text>
+				<StatusBar hidden={true} />
 			</View>
 		</TouchableWithoutFeedback>
 	);
@@ -49,6 +79,7 @@ const Game = (props) => {
 
 const styles = StyleSheet.create({
 	container: {
+		position: 'relative',
 		height: windowHeight,
 		width: windowWidth,
 		display: 'flex',
