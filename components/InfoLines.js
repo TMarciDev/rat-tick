@@ -8,8 +8,8 @@ const windowHeight = Dimensions.get('window').height;
 const InfoLines = (props) => {
 	return (
 		<View style={{ width: windowWidth }}>
-			<Bar width={props.width1} color='red' />
-			<Bar width={props.width2} color='blue' />
+			<Bar width={props.width1} color='blue' />
+			<Bar width={props.width2} color='red' />
 		</View>
 	);
 };
