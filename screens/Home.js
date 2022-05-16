@@ -13,12 +13,13 @@ const windowHeight = Dimensions.get('window').height;
 
 const Home = ({ navigation }) => {
 	const [goal, setGoal] = useState(500);
+	const [tapLimit, setTapLimit] = useState(50);
 	return (
 		<SafeAreaView style={styles.container}>
 			<Text>Goal: {goal}</Text>
 			<Pressable
 				onPress={() => {
-					navigation.navigate('Game', { goal: goal });
+					navigation.navigate('Game', { goal: goal, taps: tapLimit });
 				}}
 				style={styles.button}
 			>
@@ -30,6 +31,14 @@ const Home = ({ navigation }) => {
 					e > 1 && setGoal(e);
 				}}
 				placeholder='Goal:'
+				keyboardType='numeric'
+			/>
+			<TextInput
+				style={styles.input}
+				onChangeText={(e) => {
+					e > 1 && setTapLimit(e);
+				}}
+				placeholder='Tap limit:'
 				keyboardType='numeric'
 			/>
 		</SafeAreaView>

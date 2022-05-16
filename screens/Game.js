@@ -8,6 +8,7 @@ import {
 	Dimensions,
 	TouchableWithoutFeedback,
 } from 'react-native';
+import InfoBoard from '../components/InfoBoard';
 
 // borderColor: 'red', borderWidth: 8,
 
@@ -17,6 +18,8 @@ const Game = ({ navigation, route }) => {
 	const [looter, setLooter] = useState(Math.random() >= 0.5);
 	const [score1, setScore1] = useState(0);
 	const [score2, setScore2] = useState(0);
+	const [tap1, setTap1] = useState(0);
+	const [tap2, setTap2] = useState(0);
 
 	useEffect(() => {
 		const timerId = setInterval(() => {
@@ -29,12 +32,24 @@ const Game = ({ navigation, route }) => {
 		return score1 >= route.params.goal || score2 >= route.params.goal;
 	};
 
+	const tapped = (y) => {
+		const limit = route.params.taps;
+		if (y <= windowHeight / 2) {
+			setTap1(tap1 + 1);
+			return tap1 < limit;
+		} else {
+			setTap2(tap2 + 1);
+			return tap2 < limit;
+		}
+	};
+
 	return (
 		<View
-			onTouchStart={() => {
-				!isFinished() && setLooter(!looter);
+			onTouchStart={(e) => {
+				if (!isFinished() && tapped(e.nativeEvent.locationY)) {
+					setLooter(!looter);
+				}
 			}}
-			onPressOut={() => this.console('Button 1 released')}
 		>
 			<View
 				style={[
@@ -55,22 +70,9 @@ const Game = ({ navigation, route }) => {
 				>
 					Goal: {route.params.goal}
 				</Text>
-				<View style={{ width: windowWidth }}>
-					<View
-						style={{
-							width: (score1 / route.params.goal) * windowWidth,
-							backgroundColor: 'blue',
-							height: 90,
-						}}
-					/>
-					<View
-						style={{
-							width: (score2 / route.params.goal) * windowWidth,
-							backgroundColor: 'red',
-							height: 90,
-						}}
-					/>
-				</View>
+
+				<InfoBoard goal={route.params.goal} score1={score1} score2={score2} />
+
 				<Text style={[styles.points, { paddingBottom: 0 }]}>
 					Goal: {route.params.goal}
 				</Text>
