@@ -37,7 +37,7 @@ const Game = ({ navigation, route }) => {
 	};
 
 	const tapped = (y) => {
-		if (looter == null) return;
+		if (looter == null) return true;
 		if (y <= windowHeight / 2) {
 			tap2 < limit && setTap1(tap1 + 1);
 			return tap1 < limit;
@@ -50,10 +50,12 @@ const Game = ({ navigation, route }) => {
 	return (
 		<View
 			onTouchStart={(e) => {
-				if (!isFinished() && tapped(e.nativeEvent.pageY) && looter != null) {
-					setLooter(!looter);
-				} else if (!isFinished()) {
-					setLooter(Math.random() >= 0.5);
+				if (!isFinished() && tapped(e.nativeEvent.pageY)) {
+					if (looter != null) {
+						setLooter(!looter);
+					} else {
+						setLooter(Math.random() >= 0.5);
+					}
 				}
 			}}
 		>
