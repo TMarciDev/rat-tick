@@ -65,6 +65,7 @@ const Game = ({ navigation, route }) => {
 					player2={{ score: score2, taps: limit - tap2 }}
 				/>
 			</View>
+			<StatusBar hidden={true} />
 		</View>
 	);
 };
