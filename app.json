@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "tick-shit",
-    "slug": "tick-shit",
+    "name": "RAT TICK",
+    "slug": "rattick",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/man_icon_whites.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/man_icon_splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -22,10 +22,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/man_icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.tickshit.tickshit",
+      "package": "com.rattick.rattick",
       "versionCode": 1
     },
     "web": {
