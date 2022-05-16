@@ -52,7 +52,7 @@ const Game = ({ navigation, route }) => {
 			onTouchStart={(e) => {
 				if (!isFinished() && tapped(e.nativeEvent.pageY) && looter != null) {
 					setLooter(!looter);
-				} else {
+				} else if (!isFinished()) {
 					setLooter(Math.random() >= 0.5);
 				}
 			}}
