@@ -10,8 +10,8 @@ const Stack = createNativeStackNavigator();
 export default function App() {
 	return (
 		<NavigationContainer>
-			<Stack.Navigator>
-				<Stack.Screen name='Home' component={Home} />
+			<Stack.Navigator screenOptions={{ headerTitleAlign: 'center' }}>
+				<Stack.Screen name='RAT TICK' component={Home} />
 				<Stack.Screen
 					name='Game'
 					component={Game}

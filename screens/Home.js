@@ -6,7 +6,9 @@ import {
 	Dimensions,
 	Pressable,
 	TextInput,
+	Image,
 } from 'react-native';
+import logo from '../assets/man-icon.png';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -16,6 +18,11 @@ const Home = ({ navigation }) => {
 	const [tapLimit, setTapLimit] = useState(50);
 	return (
 		<SafeAreaView style={styles.container}>
+			<Image
+				source={logo}
+				style={{ height: windowHeight / 2.5, marginVertical: 10 }}
+				resizeMode='contain'
+			/>
 			<Text>Goal: {goal}</Text>
 			<Text>Tap limit: {tapLimit}</Text>
 			<Pressable
@@ -31,7 +38,7 @@ const Home = ({ navigation }) => {
 				onChangeText={(e) => {
 					e > 1 && setGoal(e);
 				}}
-				placeholder='Goal:'
+				placeholder='Goal'
 				keyboardType='numeric'
 			/>
 			<TextInput
@@ -39,7 +46,7 @@ const Home = ({ navigation }) => {
 				onChangeText={(e) => {
 					e > 1 && setTapLimit(e);
 				}}
-				placeholder='Tap limit:'
+				placeholder='Tap limit'
 				keyboardType='numeric'
 			/>
 		</SafeAreaView>
@@ -52,7 +59,7 @@ const styles = StyleSheet.create({
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
-		justifyContent: 'center',
+		justifyContent: 'flex-start',
 	},
 	button: {
 		alignItems: 'center',

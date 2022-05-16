@@ -15,7 +15,8 @@ import InfoBoard from '../components/InfoBoard';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const Game = ({ navigation, route }) => {
-	const [looter, setLooter] = useState(Math.random() >= 0.5);
+	//Math.random() >= 0.5
+	const [looter, setLooter] = useState(null);
 	const [score1, setScore1] = useState(0);
 	const [score2, setScore2] = useState(0);
 	const [tap1, setTap1] = useState(0);
@@ -24,7 +25,9 @@ const Game = ({ navigation, route }) => {
 
 	useEffect(() => {
 		const timerId = setInterval(() => {
-			!isFinished() && (looter ? setScore1(score1 + 1) : setScore2(score2 + 1));
+			if (!isFinished() && looter != null) {
+				looter ? setScore1(score1 + 1) : setScore2(score2 + 1);
+			}
 		}, 1);
 		return () => clearInterval(timerId);
 	});
@@ -34,6 +37,7 @@ const Game = ({ navigation, route }) => {
 	};
 
 	const tapped = (y) => {
+		if (looter == null) return;
 		if (y <= windowHeight / 2) {
 			tap2 < limit && setTap1(tap1 + 1);
 			return tap1 < limit;
@@ -46,8 +50,10 @@ const Game = ({ navigation, route }) => {
 	return (
 		<View
 			onTouchStart={(e) => {
-				if (!isFinished() && tapped(e.nativeEvent.pageY)) {
+				if (!isFinished() && tapped(e.nativeEvent.pageY) && looter != null) {
 					setLooter(!looter);
+				} else {
+					setLooter(Math.random() >= 0.5);
 				}
 			}}
 		>
@@ -55,7 +61,9 @@ const Game = ({ navigation, route }) => {
 				style={[
 					styles.container,
 					{
-						backgroundColor: `${looter ? 'lightblue' : 'pink'}`,
+						backgroundColor: `${
+							looter != null ? (looter ? 'lightblue' : 'pink') : 'white'
+						}`,
 					},
 				]}
 			>
