@@ -20,6 +20,7 @@ const Game = ({ navigation, route }) => {
 	const [score2, setScore2] = useState(0);
 	const [tap1, setTap1] = useState(0);
 	const [tap2, setTap2] = useState(0);
+	const limit = route.params.taps;
 
 	useEffect(() => {
 		const timerId = setInterval(() => {
@@ -33,12 +34,11 @@ const Game = ({ navigation, route }) => {
 	};
 
 	const tapped = (y) => {
-		const limit = route.params.taps;
 		if (y <= windowHeight / 2) {
-			setTap1(tap1 + 1);
+			tap2 < limit && setTap1(tap1 + 1);
 			return tap1 < limit;
 		} else {
-			setTap2(tap2 + 1);
+			tap2 < limit && setTap2(tap2 + 1);
 			return tap2 < limit;
 		}
 	};
@@ -46,7 +46,7 @@ const Game = ({ navigation, route }) => {
 	return (
 		<View
 			onTouchStart={(e) => {
-				if (!isFinished() && tapped(e.nativeEvent.locationY)) {
+				if (!isFinished() && tapped(e.nativeEvent.pageY)) {
 					setLooter(!looter);
 				}
 			}}
@@ -59,26 +59,11 @@ const Game = ({ navigation, route }) => {
 					},
 				]}
 			>
-				<Text style={[styles.points, { transform: [{ rotate: '180deg' }] }]}>
-					{score1}
-				</Text>
-				<Text
-					style={[
-						styles.points,
-						{ paddingBottom: 0, transform: [{ rotate: '180deg' }] },
-					]}
-				>
-					Goal: {route.params.goal}
-				</Text>
-
-				<InfoBoard goal={route.params.goal} score1={score1} score2={score2} />
-
-				<Text style={[styles.points, { paddingBottom: 0 }]}>
-					Goal: {route.params.goal}
-				</Text>
-
-				<Text style={styles.points}>{score2}</Text>
-				<StatusBar hidden={true} />
+				<InfoBoard
+					goal={route.params.goal}
+					player1={{ score: score1, taps: limit - tap1 }}
+					player2={{ score: score2, taps: limit - tap2 }}
+				/>
 			</View>
 		</View>
 	);
@@ -93,10 +78,6 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		alignItems: 'center',
 		justifyContent: 'space-between',
-	},
-	points: {
-		fontSize: 50,
-		paddingBottom: 100,
 	},
 });
 

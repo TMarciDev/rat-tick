@@ -1,5 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Dimensions } from 'react-native';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const Bar = (props) => {
 	return (
@@ -7,7 +10,7 @@ const Bar = (props) => {
 			style={{
 				width: props.width,
 				backgroundColor: props.color,
-				height: 90,
+				height: windowHeight / 10,
 			}}
 		/>
 	);
