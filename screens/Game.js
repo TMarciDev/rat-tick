@@ -4,10 +4,12 @@ import {
 	StyleSheet,
 	Text,
 	View,
-	TouchableWithoutFeedback,
 	Alert,
 	Dimensions,
+	TouchableWithoutFeedback,
 } from 'react-native';
+
+// borderColor: 'red', borderWidth: 8,
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -28,15 +30,18 @@ const Game = ({ navigation, route }) => {
 	};
 
 	return (
-		<TouchableWithoutFeedback
-			onPress={() => {
+		<View
+			onTouchStart={() => {
 				!isFinished() && setLooter(!looter);
 			}}
+			onPressOut={() => this.console('Button 1 released')}
 		>
 			<View
 				style={[
 					styles.container,
-					{ backgroundColor: `${looter ? 'lightblue' : 'pink'}` },
+					{
+						backgroundColor: `${looter ? 'lightblue' : 'pink'}`,
+					},
 				]}
 			>
 				<Text style={[styles.points, { transform: [{ rotate: '180deg' }] }]}>
@@ -73,7 +78,7 @@ const Game = ({ navigation, route }) => {
 				<Text style={styles.points}>{score2}</Text>
 				<StatusBar hidden={true} />
 			</View>
-		</TouchableWithoutFeedback>
+		</View>
 	);
 };
 
