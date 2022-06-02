@@ -39,7 +39,7 @@ const Game = ({ navigation, route }) => {
 	const tapped = (y) => {
 		if (looter == null) return true;
 		if (y <= windowHeight / 2) {
-			tap2 < limit && setTap1(tap1 + 1);
+			tap1 < limit && setTap1(tap1 + 1);
 			return tap1 < limit;
 		} else {
 			tap2 < limit && setTap2(tap2 + 1);
