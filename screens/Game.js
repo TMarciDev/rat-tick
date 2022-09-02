@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {
-	StyleSheet,
-	Text,
-	View,
-	Alert,
-	Dimensions,
-	TouchableWithoutFeedback,
-} from 'react-native';
+import { StyleSheet, View, Dimensions } from 'react-native';
 import InfoBoard from '../components/InfoBoard';
+import RestartButton from '../components/RestartButton';
 
 // borderColor: 'red', borderWidth: 8,
 
@@ -22,6 +16,14 @@ const Game = ({ navigation, route }) => {
 	const [tap1, setTap1] = useState(0);
 	const [tap2, setTap2] = useState(0);
 	const limit = route.params.taps;
+
+	const restart = () => {
+		setLooter(null);
+		setScore1(0);
+		setScore2(0);
+		setTap1(0);
+		setTap2(0);
+	};
 
 	useEffect(() => {
 		const timerId = setInterval(() => {
@@ -73,6 +75,11 @@ const Game = ({ navigation, route }) => {
 					goal={route.params.goal}
 					player1={{ score: score1, taps: limit - tap1 }}
 					player2={{ score: score2, taps: limit - tap2 }}
+				/>
+				<RestartButton
+					isFinished={isFinished}
+					restart={restart}
+					isFirstWinner={score1 >= route.params.goal}
 				/>
 			</View>
 			<StatusBar hidden={true} />
